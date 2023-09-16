@@ -17,7 +17,7 @@ const StudentLogin = () => {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="bg-white p-8 rounded shadow-md w-96">
-        <h2 className="text-2xl font-semibold mb-4">Student Login</h2>
+        <h2 className="text-2xl font-semibold mb-4">Students Login</h2>
         <input
           type="text"
           placeholder="Username"
