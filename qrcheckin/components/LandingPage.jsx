@@ -3,11 +3,14 @@
 import Link from 'next/link';
 import {useState , useEffect } from 'react';
 import {signIn , signOut , useSession, getProviders} from 'next-auth/react';
+import {useRouter} from 'next/navigation';
 
 const LandingPage = () => {
 
-  // const isStudentLoggedIn = false;
+  const router = useRouter();
+
   const {data: session} = useSession();
+  
 
   const [providers, setProviders] = useState(null);
 
@@ -20,6 +23,8 @@ const LandingPage = () => {
   }, []);
 
 
+ 
+
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col">
       <header className="bg-blue-500 py-4">
@@ -29,7 +34,21 @@ const LandingPage = () => {
         </div>
       </header>
 
+
+
       <section className="bg-blue-500 py-12">
+      {session?.user ? (
+        <div className="container mx-auto text-center">
+          <h2 className="text-2xl font-semibold text-white mb-4">Welcome {session.user.name}</h2>
+          <br />
+          <button
+            className="bg-white text-blue-500 hover:bg-blue-400 mx-8 py-2 px-6 rounded-full text-lg font-semibold transition duration-300"
+            onClick={() => signOut()}
+          >
+            Sign Out
+          </button>
+        </div>
+      ): (
         <div className="container mx-auto text-center">
           <h2 className="text-2xl font-semibold text-white mb-4">Get Started</h2>
           <br />
@@ -46,9 +65,13 @@ const LandingPage = () => {
               </div>
             ))}
         </div>
+
+
+      )
+      }
       </section>
 
-       <footer className="bg-gray-200 py-4">
+      <footer className="bg-gray-200 py-4">
         <div className="container mx-auto text-center">
           <p>&copy; {new Date().getFullYear()} QR Check-In</p>
         </div>
