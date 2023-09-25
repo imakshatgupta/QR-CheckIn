@@ -3,19 +3,36 @@ import { Schema, model, models } from "mongoose";
 const UserSchema = new Schema({
   email: {
     type: String,
-    unique: [true, "Email already exists!"],
-    required: [true, "Email is required!"],
+    required: true,
+    unique: true,
+    // Define a custom validator function for email validation
+    validate: {
+      validator: function (value) {
+        // Use a regular expression to check if the email ends with @iiitu.ac.in
+        return /@iiitu\.ac\.in$/.test(value);
+      },
+      message: 'Enter your institute email address!',
+    },
   },
-  username: {
+  name: {
     type: String,
-    required: [true, "Username is required!"],
-    match: [
-      /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/,
-      "Username invalid, it should contain 8-20 alphanumeric letters and be unique!",
-    ],
+    required: [true, "Name is required!"],
   },
-  image:{
+  rollno: {
     type: String,
+    required: [true, "Roll Number is required!"],
+  },
+  hostel: {
+    type: String,
+    required: [true, "Hostel is required!"],
+  },
+  roomno: {
+    type: String,
+    required: [true, "Room Number is required!"],
+  },
+  mobile: {
+    type: String,
+    required: [true, "Mobile Number is required!"],
   },
 });
 
