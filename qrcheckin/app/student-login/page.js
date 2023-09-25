@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 
 const StudentLogin = () => {
   const [studentEmail, setstudentEmail] = useState("");
@@ -76,12 +77,15 @@ const StudentLogin = () => {
   >
     Sign In
   </button>
-  <p className="mt-4 text-blue-500 hover:underline">
-    Don't have an account?{" "}
+    <br />
+    <br />
+    Don't have an account?
+  <p className="mt-4 text-blue-100 hover:underline">
     <Link href="/student-signup">
       Sign up
     </Link>
-  </p>
+    </p>    
+  
 </div>
 
         </form>

@@ -18,7 +18,6 @@ const StudentSignup = () => {
     mobile: "",
   });
 
-  const [buttonDisabled, setButtonDisabled] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
   const handleSignup = async () => {
@@ -33,18 +32,6 @@ const StudentSignup = () => {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    if (
-      user.email.length > 0 &&
-      user.password.length > 0 &&
-      user.username.length > 0
-    ) {
-      setButtonDisabled(false);
-    } else {
-      setButtonDisabled(true);
-    }
-  }, [user]);
 
   return (
     <div className="bg-gradient-to-b from-blue-500 to-blue-800 min-h-screen flex flex-col justify-center items-center text-white">
@@ -193,7 +180,7 @@ const StudentSignup = () => {
     type="submit"
     className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-md transition duration-300"
   >
-    {buttonDisabled ? "Sign up" : "Sign up"}
+    Sign up
   </button>
   <Link href="/student-login" className="text-blue-100 hover:underline"  >
      

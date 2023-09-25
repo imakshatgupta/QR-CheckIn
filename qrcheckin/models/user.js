@@ -1,42 +1,40 @@
-import { Schema, model, models } from "mongoose";
+import mongoose from "mongoose";
 
-const UserSchema = new Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    // Define a custom validator function for email validation
-    validate: {
-      validator: function (value) {
-        // Use a regular expression to check if the email ends with @iiitu.ac.in
-        return /@iiitu\.ac\.in$/.test(value);
-      },
-      message: 'Enter your institute email address!',
+const userSchema = new mongoose.Schema({
+
+
+    name: {
+        type: String,
+        required: true,
     },
-  },
-  name: {
-    type: String,
-    required: [true, "Name is required!"],
-  },
-  rollno: {
-    type: String,
-    required: [true, "Roll Number is required!"],
-  },
-  hostel: {
-    type: String,
-    required: [true, "Hostel is required!"],
-  },
-  roomno: {
-    type: String,
-    required: [true, "Room Number is required!"],
-  },
-  mobile: {
-    type: String,
-    required: [true, "Mobile Number is required!"],
-  },
-});
+    email: {
+        type: String,
+        required: true,
+        unique:true
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    hostel: {
+        type: String,
+        required: true,
+    },
+    rollno: {
+        type: String,
+        required: true,
+    },
+    roomno: {
+        type: String,
+        required: true,
+    },
+    mobile: {
+        type: String,
+        required: true,
+    },
 
+})
 
-const User = models.User || model("User",UserSchema);
+const User =  mongoose.models.users || mongoose.model("users", userSchema);
 
-export default User; 
+export default User;
