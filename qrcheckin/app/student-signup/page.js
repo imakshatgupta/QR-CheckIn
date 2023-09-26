@@ -176,18 +176,19 @@ const StudentSignup = () => {
           </div>
 
           <div className="flex flex-col items-center space-y-4">
-  <button
-    type="submit"
-    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-md transition duration-300"
-  >
-    Sign up
-  </button>
-  <Link href="/student-login" className="text-blue-100 hover:underline"  >
-     
-     Visit login page
-  </Link>
-</div>
-
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-md transition duration-300"
+            >
+              Sign up
+            </button>
+            <Link
+              href="/student-login"
+              className="text-blue-100 hover:underline"
+            >
+              Visit login page
+            </Link>
+          </div>
         </form>
       </div>
     </div>

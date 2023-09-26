@@ -1,49 +1,47 @@
-import {connectToDB} from '../../../../dbConfig/dbConfig';
+import { connectToDB } from '../../../../dbConfig/dbConfig';
 import User from '../../../../models/user';
-import { NextRequest, NextResponse } from 'next/server';
-import bcryptjs from 'bcryptjs';
+import bcrypt from 'bcryptjs';
+import { NextResponse } from 'next/server';
+import { useRouter } from 'next/navigation';
 
 connectToDB();
 
-export async function POST (request){
-    try {
-        const reqBody = await request.json();
-        const {name , email , password , hostel , rollno , roomno , mobile} = reqBody
+export async function POST(request) {
 
-        console.log(reqBody);
+    const router = useRouter();
 
-        const user = await User.findOne({email})
+  try {
+    const reqBody = await request.json();
+    const { name, email, password, hostel, rollno, roomno, mobile } = reqBody;
 
-        if(user){
-            return NextResponse.json({error: "User already exists"}, {status: 400})
-        }
+    console.log(reqBody);
 
-        const salt = await bcryptjs.genSalt(10)
-        const hashedPassword = await bcryptjs.hash(password, salt)
+    // Check if a user with the same email already exists
+    const user = await User.findOne({ email });
 
-        const newUser = new User({
-        
-            name,
-            email,
-            password: hashedPassword,
-            hostel,
-            rollno,
-            roomno,
-            mobile,
-
-        })
-
-        const savedUser = await newUser.save()
-        console.log(savedUser);
-
-        return NextResponse.json({
-            message: "User created successfully",
-            success: true,
-            savedUser
-        })
-
-                 
-    } catch (error) {
-        return NextResponse.error(error);
+    if (user) {
+      return NextResponse.json({ error: 'User already exists' }, { status: 400 });
     }
+
+    const hashedPassword = await bcrypt.hash(password, parseInt(5, 10));
+
+    const newUser = new User({
+      name,
+      email,
+      password: hashedPassword,
+      hostel,
+      rollno,
+      roomno,
+      mobile,
+    });
+
+    const savedUser = await newUser.save();
+    console.log(savedUser);
+
+    router.push("/student-login");
+
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
 }
