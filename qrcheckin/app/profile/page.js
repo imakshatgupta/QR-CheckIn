@@ -36,7 +36,7 @@ export default function StudentProfile() {
       // console.log("success");
       // console.log(isComplete);
       // if (isComplete) {
-      //   router.push("/student-dashboard");
+        router.push("/student-dashboard");
       // } else {
       //   // Profile is not complete, you can show a message or handle it as needed
       //   console.log("Profile is not complete");
