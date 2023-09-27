@@ -12,6 +12,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid request" }, { status: 400 });
     }
 
+    console.log("request.body");
+
     const reqBody = await request.json();
     const { rollno, phone, idCardImage, hostel, roomno } = reqBody;
 
@@ -53,7 +55,6 @@ export async function POST(request: NextRequest) {
       user.phone = phone;
       user.hostel = hostel;
       user.roomno = roomno;
-      user.idCardImage = idCardImage;
       
       // Save the updated user data to the database
       await user.save();

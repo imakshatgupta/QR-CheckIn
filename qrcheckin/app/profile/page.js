@@ -15,28 +15,32 @@ export default function StudentProfile() {
     roomno: "",
   });
 
-  const isProfileComplete = async () => {
-    try {
-      const response = await axios.get("/api/student/isProfileComplete");
-      return true;
-    } catch (error) {
-      console.error("Error checking profile completeness", error);
-      return false;
-    }
-  };
+  // const isProfileComplete = async () => {
+  //   try {
+  //     const response = await axios.get("/api/student/isProfileComplete");
+  //     return true;
+  //   } catch (error) {
+  //     console.error("Error checking profile completeness", error);
+  //     return false;
+  //   }
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post("/api/student/profile", user);
-      console.log("Profile update success", response.data);
-      const isComplete = await isProfileComplete();
-      if (isComplete) {
-        router.push("/student-dashboard");
-      } else {
-        // Profile is not complete, you can show a message or handle it as needed
-        console.log("Profile is not complete");
-      }
+      console.log("profile");
+      // console.log("Profile update success", response.data);
+      // const isComplete = await isProfileComplete();
+
+      // console.log("success");
+      // console.log(isComplete);
+      // if (isComplete) {
+      //   router.push("/student-dashboard");
+      // } else {
+      //   // Profile is not complete, you can show a message or handle it as needed
+      //   console.log("Profile is not complete");
+      // }
     } catch (error) {
       console.log("Profile update failed", error.message);
     }

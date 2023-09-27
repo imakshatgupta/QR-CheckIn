@@ -14,13 +14,38 @@ export default function LoginPage() {
   })
   const [loading, setLoading] = React.useState(false);
 
+  const isProfileComplete = async () => {
+    try {
+      const response = await axios.get("/api/student/isProfileComplete");
+      console.log("hii" , response.data.isComplete);
+        return response.data.isComplete;
+
+    } catch (error) {
+      console.error("Error checking profile completeness", error);
+      return false;
+    }
+  };
 
   const onLogin = async () => {
       try {
           setLoading(true);
           const response = await axios.post("/api/student/login", user);
+          console.log("login");
           console.log("Login success", response.data);
-          router.push("/profile");
+          const isComplete = await isProfileComplete();
+          console.log("hii" , isComplete);
+
+            console.log("success");
+            if (isComplete) {
+                router.push("/student-dashboard");
+                }
+            else {
+                // Profile is not complete, you can show a message or handle it as needed
+                console.log("Profile is not complete");
+                router.push("/profile");
+                }
+                
+
       } catch (error) {
           console.log("Login failed", error.message);
       } finally{
