@@ -14,23 +14,26 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please provide a password"],
     },
-    // rollno: {
-    //     type: String,
-    //     required: [true, "Please provide a rollno"],
-    // },
-    // roomno: {
-    //     type: String,
-    //     required: [true, "Please provide a roomno"],
-    // },
-    // hostel: {
-    //     type: String,
-    //     required: [true, "Please provide a hostel"],
-    // },
-    // phone: {
-    //     type: String,
-    //     required: [true, "Please provide a phone"],
-    // },
-    
+    rollno: {
+        type: String,
+        // required: [true, "Please provide a rollno"],
+    },
+    roomno: {
+        type: String,
+        // required: [true, "Please provide a roomno"],
+    },
+    hostel: {
+        type: String,
+        // required: [true, "Please provide a hostel"],
+    },
+    phone: {
+        type: String,
+        // required: [true, "Please provide a phone"],
+    },
+    idCardImage: {
+        data: Buffer,
+        contentType: String,
+    },
 })
 
 const User = mongoose.models.users || mongoose.model("users", userSchema);

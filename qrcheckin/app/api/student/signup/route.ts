@@ -30,16 +30,21 @@ export async function POST(request: NextRequest){
         
         console.log(username, email, hashedPassword);
 
-        const newUser = new User({
-          username,
-          email,
-          password: hashedPassword
-        })
+        try {
+          const newUser = new User({
+            username,
+            email,
+            password: hashedPassword
+          });
         
+          const savedUser = await newUser.save();
+          console.log(savedUser);
         
-
-        const savedUser = await newUser.save()
-        console.log(savedUser);
+          // Additional logic for success if needed
+        } catch (error) {
+          console.error(error);
+          // Handle the error here, for example, send an error response to the client
+        }
         
         
 
@@ -47,14 +52,13 @@ export async function POST(request: NextRequest){
         return NextResponse.json({
             message: "User created successfully",
             success: true,
-            savedUser
         })
         
         
 
 
     } catch (error) {
-        return NextResponse.json({error: error.message}, {status: 500})
+        return NextResponse.json({error: error.message}, {status:500})
 
-    }
+ }
 }
