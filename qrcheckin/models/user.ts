@@ -30,9 +30,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         // required: [true, "Please provide a phone"],
     },
-    idCardImage: {
-        data: Buffer,
-        contentType: String,
+    isOutside: {
+        type: Boolean,
+        default: false,
     },
 })
 

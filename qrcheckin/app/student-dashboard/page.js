@@ -1,46 +1,19 @@
 "use client";
 
-import Link from "next/link";
-import React, { useEffect } from "react";
+import React , {useState} from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import QRCode from 'qrcode.react';
 
-export default function StudentProfile() {
+
+export default function Location() {
   const router = useRouter();
-  const [user, setUser] = React.useState({
-    rollno: "",
-    phone: "",
-    idCardImage: "",
-    hostel: "",
-    roomno: "",
-  });
+  
 
-  const isProfileComplete = async () => {
-    try {
-      const response = await axios.get("/api/student/isProfileComplete");
-      return true;
-    } catch (error) {
-      console.error("Error checking profile completeness", error);
-      return false;
-    }
-  };
+  const [qr, setQr] = useState(""); 
+  const [sub, setSub] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post("/api/student/profile", user);
-      console.log("Profile update success", response.data);
-      const isComplete = await isProfileComplete();
-      if (isComplete) {
-        router.push("/student-dashboard");
-      } else {
-        // Profile is not complete, you can show a message or handle it as needed
-        console.log("Profile is not complete");
-      }
-    } catch (error) {
-      console.log("Profile update failed", error.message);
-    }
-  };
+    const [userLocation, setUserLocation] = useState('');
 
   const logout = async () => {
     try {
@@ -51,25 +24,115 @@ export default function StudentProfile() {
     }
 
   }
+  
 
+  const done = async () => {
+    try {
+       await axios.post('/api/student/verify')
+        router.push('/student-exit')
+    } catch (error) {
+        console.log(error.message);
+    }
+  }
+  
+    const handleLocationSubmit = async (e) => {
+      e.preventDefault();
+      console.log(userLocation);
+      try {
 
-  return (
-    <div className="bg-gradient-to-b from-blue-500 to-blue-800 min-h-screen flex flex-col justify-center items-center text-white">
-      <header className="text-4xl font-semibold mb-4">Student Profile</header>
-      <br />
-      <div className="bg-white bg-opacity-20 p-6 rounded-lg shadow-lg text-center">
-        <h2 className="text-2xl font-semibold mb-4">Update Profile</h2>
-</div>
-
-<button
-    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-md transition duration-300"
-    onClick={() => logout()}
-
->
-    Logout
-</button>
+        console.log("Location", userLocation);  
+const response = await axios.get("/api/student/qr");
         
-    </div>
-  );
-};
+        console.log("hii",response.data.qrdata);
+        const qrdata = {
+          ...response.data.qrdata,
+          location: userLocation,
+        };
+        setSub(true);
+        setQr(JSON.stringify(qrdata));
+        
+        
+      } catch (error) {
+        console.log("Failed", error.message);
+      } 
+    };
 
+    
+    return (
+      <div className="bg-gradient-to-b from-blue-500 to-blue-800 min-h-screen flex flex-col justify-center items-center text-white">
+        <header className="text-4xl font-semibold mb-4">Where are you going?</header>
+        <br />
+        <div className="bg-white bg-opacity-20 p-6 rounded-lg shadow-lg text-center">
+          <form className="mt-8 space-y-6" onSubmit={handleLocationSubmit}>
+            <div className="rounded-md shadow-sm -space-y-px">
+              <div>
+                <label htmlFor="userLocation" className="sr-only">
+                  Where are you going?
+                </label>
+                <input
+                  id="userLocation"
+                  name="userLocation"
+                  type="text"
+                  autoComplete="off"
+                  required
+                  className="mt-4 px-4 py-2 w-full rounded-md bg-gray-100 text-gray-900"
+                  placeholder="Location"
+                  value={userLocation}
+                  onChange={(e) => setUserLocation(e.target.value)}
+                />
+              </div>
+            </div>
+  
+            <div className="text-center">
+              <button
+                type="submit"
+                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-md transition duration-300"
+              >
+                OUT ENTRY
+              </button>
+            </div>
+          </form>
+        </div>
+        <br />
+
+        <br />
+         
+        {sub &&
+        <QRCode value={qr} />
+        }
+        <br />
+        {sub &&
+        <button
+          onClick={done}
+          className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-md transition duration-300"
+        >
+          Done
+        </button>
+        }
+        
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <button
+          onClick={logout}
+          className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-md transition duration-300"
+        >
+          Logout
+        </button>
+      </div>
+
+
+
+
+
+
+
+
+
+
+    );
+
+  
+}
