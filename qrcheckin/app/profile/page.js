@@ -172,7 +172,7 @@ export default function StudentProfile() {
       </div>
 
 <button
-    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-md transition duration-300"
+    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 mt-3 px-6 rounded-md transition duration-300"
     onClick={() => logout()}
 
 >
