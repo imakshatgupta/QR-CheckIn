@@ -16,19 +16,15 @@ const userSchema = new mongoose.Schema({
     },
     rollno: {
         type: String,
-        // required: [true, "Please provide a rollno"],
     },
     roomno: {
         type: String,
-        // required: [true, "Please provide a roomno"],
     },
     hostel: {
         type: String,
-        // required: [true, "Please provide a hostel"],
     },
     phone: {
         type: String,
-        // required: [true, "Please provide a phone"],
     },
     isOutside: {
         type: Boolean,
