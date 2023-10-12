@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "User does not exist" }, { status: 400 });
     }
 
-    // Check if password is correct
+    // Check if password is correct or not
     const isMatch = guard.password === password;
     if (!isMatch) {
       return NextResponse.json({ error: "Incorrect password" }, { status: 400 });
