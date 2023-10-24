@@ -98,6 +98,7 @@ function Scanner() {
           {/* <p>Scanned Data:</p> */}
           {result && (
             <>
+            {/* giving current time */}
               <p className="">Text: {result.text}</p>
               <p className=''>Scan Time: {result.scanTime}</p>
             </>
